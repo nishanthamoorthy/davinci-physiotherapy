@@ -1,0 +1,38 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ mode }} Service | Admin{% endblock %}
+{% block page_title %}{{ mode }} Service{% endblock %}
+{% block content %}
+
+<div class="form-card" style="max-width:700px;">
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      <label class="form-label">{{ form.title.label.text }}</label>
+      {{ form.title(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.description.label.text }}</label>
+      {{ form.description(class="form-control", rows="4") }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.icon.label.text }}</label>
+      {{ form.icon(class="form-control", placeholder="e.g. fa-solid fa-bone") }}
+      <div class="form-text">Use any Font Awesome 6 class name.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.image.label.text }}</label>
+      {{ form.image(class="form-control") }}
+      {% if service and service.image %}
+        <img src="{{ url_for('static', filename='uploads/' ~ service.image) }}" style="height:60px;" class="mt-2 rounded">
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.status.label.text }}</label>
+      {{ form.status(class="form-select") }}
+    </div>
+    <button type="submit" class="btn-brand-solid"><i class="fa-solid fa-check"></i> Save Service</button>
+    <a href="{{ url_for('admin.services') }}" class="btn btn-outline-dark">Cancel</a>
+  </form>
+</div>
+
+{% endblock %}

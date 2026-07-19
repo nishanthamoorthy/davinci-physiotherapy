@@ -1,0 +1,41 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ mode }} Testimonial | Admin{% endblock %}
+{% block page_title %}{{ mode }} Testimonial{% endblock %}
+{% block content %}
+
+<div class="form-card" style="max-width:700px;">
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      <label class="form-label">{{ form.patient_name.label.text }}</label>
+      {{ form.patient_name(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.designation.label.text }}</label>
+      {{ form.designation(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.review.label.text }}</label>
+      {{ form.review(class="form-control", rows="4") }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.rating.label.text }}</label>
+      {{ form.rating(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.image.label.text }}</label>
+      {{ form.image(class="form-control") }}
+      {% if testimonial and testimonial.image %}
+        <img src="{{ url_for('static', filename='uploads/' ~ testimonial.image) }}" style="height:60px;" class="mt-2 rounded-circle">
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">{{ form.status.label.text }}</label>
+      {{ form.status(class="form-select") }}
+    </div>
+    <button type="submit" class="btn-brand-solid"><i class="fa-solid fa-check"></i> Save Testimonial</button>
+    <a href="{{ url_for('admin.testimonials') }}" class="btn btn-outline-dark">Cancel</a>
+  </form>
+</div>
+
+{% endblock %}

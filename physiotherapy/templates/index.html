@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block title %}Davinci Physiotherapy | Expert Care Delivered to Your Home{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container position-relative">
+    <div class="row align-items-center">
+      <div class="col-lg-5" data-aos="fade-right">
+        <h1 class="hero-heading">Expert Care.<br>Delivered<br>to Your <em>Home</em>.</h1>
+        <p class="hero-subtext">Professional physiotherapy services in the comfort of your home.</p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="tel:{{ (site_settings.phone if site_settings else '9025100053') | replace(' ', '') }}" class="btn-brand-solid">
+            <i class="fa-solid fa-phone"></i> CALL NOW: {{ site_settings.phone if site_settings else '90251 00053' }}
+          </a>
+          <a href="{{ url_for('main.appointment') }}" class="btn-brand-outline">
+            <i class="fa-regular fa-calendar"></i> BOOK APPOINTMENT
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 py-lg-6" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container">
+    <div class="row align-items-start gy-5">
+      <div class="col-lg-6" data-aos="fade-up">
+        <span class="section-label">About Us</span>
+        <h2 class="section-title mt-2">Inspired by <em>Da Vinci</em>.<br>Driven by <em>Excellence</em>.</h2>
+        <p class="hero-subtext">At Davinci Physiotherapy, we combine knowledge, precision, and compassion to help you restore movement and improve your quality of life. Our expert physiotherapists bring personalized care to your doorstep.</p>
+        <a href="{{ url_for('main.about') }}" class="btn-brand-outline">KNOW MORE ABOUT US</a>
+      </div>
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="d-flex">
+          <div class="vertical-divider me-4 d-none d-md-block"></div>
+          <div>
+            <div class="feature-item">
+              <div class="feature-icon-circle"><i class="fa-solid fa-house-medical"></i></div>
+              <div>
+                <h6>Home Visit Service</h6>
+                <p>We bring expert care to your home for your comfort and convenience.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon-circle"><i class="fa-solid fa-user-doctor"></i></div>
+              <div>
+                <h6>Expert Physiotherapists</h6>
+                <p>Experienced professionals dedicated to your recovery and well-being.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon-circle"><i class="fa-solid fa-hand-holding-heart"></i></div>
+              <div>
+                <h6>Personalized Care</h6>
+                <p>Individualized treatment plans tailored to your unique needs.</p>
+              </div>
+            </div>
+            <div class="feature-item mb-0">
+              <div class="feature-icon-circle"><i class="fa-solid fa-shield-heart"></i></div>
+              <div>
+                <h6>Safe & Reliable</h6>
+                <p>Trusted care with a focus on safety, hygiene and effective results.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5 bg-cream" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container text-center">
+    <span class="section-label">Our Services</span>
+    <h2 class="section-title mt-2 mb-5">Comprehensive Physiotherapy Care <em>at Home</em></h2>
+    <div class="row g-4">
+      {% for service in services %}
+      <div class="col-6 col-md-4 service-col-5" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 80 }}">
+        <div class="service-card">
+          <div class="service-icon"><i class="{{ service.icon }}"></i></div>
+          <h6>{{ service.title }}</h6>
+          <p>{{ service.description }}</p>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-md-6 col-lg-4 col-xl">
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-bone"></i></div>
+          <h6>Orthopedic Physiotherapy</h6>
+          <p>Post-surgical rehab, joint & muscle pain management, arthritis care.</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-choose-section text-center">
+  <div class="container">
+    <span class="section-label">Why Choose Us</span>
+    <div class="row mt-4">
+      <div class="col-6 col-md-3 why-item" data-aos="fade-up">
+        <div class="why-icon-circle"><i class="fa-solid fa-circle-check"></i></div>
+        <h6>Convenience</h6>
+        <p>No travel. No waiting. We come to you.</p>
+      </div>
+      <div class="col-6 col-md-3 why-item" data-aos="fade-up" data-aos-delay="100">
+        <div class="why-icon-circle"><i class="fa-solid fa-heart"></i></div>
+        <h6>Compassion</h6>
+        <p>We treat you with care, respect and empathy.</p>
+      </div>
+      <div class="col-6 col-md-3 why-item" data-aos="fade-up" data-aos-delay="200">
+        <div class="why-icon-circle"><i class="fa-solid fa-bullseye"></i></div>
+        <h6>Results</h6>
+        <p>Evidence-based techniques for effective recovery.</p>
+      </div>
+      <div class="col-6 col-md-3 why-item" data-aos="fade-up" data-aos-delay="300">
+        <div class="why-icon-circle"><i class="fa-regular fa-clock"></i></div>
+        <h6>Flexible Timings</h6>
+        <p>Appointments that suit your schedule.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+{% if testimonials %}
+<section class="py-5" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container text-center">
+    <span class="section-label">Testimonials</span>
+    <h2 class="section-title mt-2 mb-5">What Our Patients Say</h2>
+    <div class="row g-4">
+      {% for t in testimonials %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 80 }}">
+        <div class="testimonial-card text-start">
+          <div class="stars">
+            {% for i in range(t.rating) %}<i class="fa-solid fa-star"></i>{% endfor %}
+          </div>
+          <p class="review">&ldquo;{{ t.review }}&rdquo;</p>
+          <div class="d-flex align-items-center mt-4">
+            <img class="testimonial-avatar" src="{{ url_for('static', filename='uploads/' ~ t.image) if t.image else 'https://ui-avatars.com/api/?name=' ~ t.patient_name ~ '&background=E6DDD2&color=5B3A1A' }}" alt="{{ t.patient_name }}">
+            <div>
+              <strong>{{ t.patient_name }}</strong>
+              <div class="text-muted small">{{ t.designation }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Contact CTA -->
+<section class="py-5" style="padding-bottom:4.5rem;">
+  <div class="container">
+    <div class="contact-cta" data-aos="zoom-in">
+      <h2 class="text-white mb-3" style="font-size:2rem;">Ready to Start Your Recovery Journey?</h2>
+      <p class="mb-4" style="opacity:0.85;">Book an appointment today and experience expert physiotherapy care in the comfort of your home.</p>
+      <a href="{{ url_for('main.appointment') }}" class="btn btn-light rounded-pill px-4 py-2 fw-semibold">Book Appointment Now</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

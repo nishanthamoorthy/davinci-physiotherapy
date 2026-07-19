@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Contact Us | Davinci Physiotherapy{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Contact</span>
+    <h1 class="mt-2">Get In Touch</h1>
+    <nav class="breadcrumb-brand mt-2">
+      <a href="{{ url_for('main.index') }}">Home</a> / <span class="active">Contact</span>
+    </nav>
+  </div>
+</div>
+
+<section class="py-5" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5" data-aos="fade-right">
+        <span class="section-label">Contact Info</span>
+        <h2 class="section-title mt-2 mb-4">We'd love to hear from you</h2>
+
+        <div class="feature-item">
+          <div class="feature-icon-circle"><i class="fa-solid fa-phone"></i></div>
+          <div>
+            <h6>Phone</h6>
+            <p>{{ site_settings.phone if site_settings else '90251 00053' }}</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-circle"><i class="fa-solid fa-envelope"></i></div>
+          <div>
+            <h6>Email</h6>
+            <p>{{ site_settings.email if site_settings else 'davinciphysiotherapy@gmail.com' }}</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon-circle"><i class="fa-solid fa-location-dot"></i></div>
+          <div>
+            <h6>Address</h6>
+            <p>{{ site_settings.address if site_settings else 'PA 9 Block, Police Quarters TNPHC, Melakottaiyur, Kandigai, Off Vandalur Kelambakkam Road, Chennai - 600127' }}</p>
+          </div>
+        </div>
+
+        <div class="ratio ratio-4x3 mt-4 rounded-4 overflow-hidden border">
+          {% if site_settings and site_settings.google_map %}
+            <iframe src="{{ site_settings.google_map }}" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          {% else %}
+            <iframe src="https://www.google.com/maps?q=Chennai&output=embed" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="form-card">
+          <h4 class="mb-4">Send Us a Message</h4>
+          <form method="POST" action="{{ url_for('main.contact') }}" class="needs-validation" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">{{ form.name.label.text }}</label>
+                {{ form.name(class="form-control", placeholder="Your name") }}
+                {% for error in form.name.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ form.phone.label.text }}</label>
+                {{ form.phone(class="form-control", placeholder="Phone number") }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ form.email.label.text }}</label>
+                {{ form.email(class="form-control", placeholder="you@example.com") }}
+                {% for error in form.email.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ form.subject.label.text }}</label>
+                {{ form.subject(class="form-control", placeholder="Subject") }}
+              </div>
+              <div class="col-12">
+                <label class="form-label">{{ form.message.label.text }}</label>
+                {{ form.message(class="form-control", rows="5", placeholder="Tell us how we can help...") }}
+                {% for error in form.message.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-brand-solid w-100 justify-content-center">
+                  <i class="fa-solid fa-paper-plane"></i> Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

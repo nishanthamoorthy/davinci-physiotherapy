@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Appointments | Admin{% endblock %}
+{% block page_title %}Appointments{% endblock %}
+{% block content %}
+
+<div class="mb-3 d-flex gap-2 flex-wrap">
+  {% for f in ['all', 'pending', 'confirmed', 'completed', 'cancelled'] %}
+    <a href="{{ url_for('admin.appointments', status=f) }}" class="btn btn-sm {{ 'btn-dark' if status_filter == f else 'btn-outline-dark' }} rounded-pill">{{ f|capitalize }}</a>
+  {% endfor %}
+</div>
+
+<div class="admin-table p-3">
+  <div class="table-responsive">
+  <table class="table align-middle mb-0">
+    <thead>
+      <tr>
+        <th>Patient</th><th>Phone</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in appointments %}
+      <tr>
+        <td>{{ a.patient_name }}<div class="text-muted small">{{ a.email or '' }}</div></td>
+        <td>{{ a.phone }}</td>
+        <td>{{ a.service.title if a.service else '-' }}</td>
+        <td>{{ a.appointment_date.strftime('%d %b %Y') }}</td>
+        <td>{{ a.appointment_time.strftime('%I:%M %p') }}</td>
+        <td><span class="badge badge-status-{{ a.status }}">{{ a.status|capitalize }}</span></td>
+        <td>
+          <div class="dropdown d-inline">
+            <button class="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">Update</button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url_for('admin.update_appointment_status', appt_id=a.id, new_status='confirmed') }}">Mark Confirmed</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('admin.update_appointment_status', appt_id=a.id, new_status='completed') }}">Mark Completed</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('admin.update_appointment_status', appt_id=a.id, new_status='cancelled') }}">Mark Cancelled</a></li>
+            </ul>
+          </div>
+          <form method="POST" action="{{ url_for('admin.delete_appointment', appt_id=a.id) }}" class="d-inline" onsubmit="return confirm('Delete this appointment?');">
+            <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="text-center text-muted py-4">No appointments found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+{% endblock %}

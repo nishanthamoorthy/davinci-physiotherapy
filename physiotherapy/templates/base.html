@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Davinci Physiotherapy | Expert Home Physiotherapy Care{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}Davinci Physiotherapy delivers expert, compassionate physiotherapy care in the comfort of your home. Book an appointment today.{% endblock %}">
+<meta name="keywords" content="physiotherapy, home physiotherapy, orthopedic rehab, neurological rehabilitation, Chennai physiotherapy">
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/logo.jpg') }}">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap 5 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<!-- AOS Animation -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader"><div class="spinner"></div></div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container">
+    <a class="navbar-brand navbar-brand-wrap" href="{{ url_for('main.index') }}">
+      <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="{{ site_settings.clinic_name if site_settings else 'Davinci Physiotherapy' }} logo">
+      <span>
+        <span class="brand-title d-block">DAVINCI<br>PHYSIOTHERAPY</span>
+        <span class="brand-subtitle">Healing. Movement. Life.</span>
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}" href="{{ url_for('main.index') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.about' %}active{% endif %}" href="{{ url_for('main.about') }}">About Us</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.services' %}active{% endif %}" href="{{ url_for('main.services') }}">Services</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.conditions' %}active{% endif %}" href="{{ url_for('main.conditions') }}">Conditions</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.benefits' %}active{% endif %}" href="{{ url_for('main.benefits') }}">Benefits</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.contact' %}active{% endif %}" href="{{ url_for('main.contact') }}">Contact</a></li>
+      </ul>
+      <a href="tel:{{ (site_settings.phone if site_settings else '9025100053') | replace(' ', '') }}" class="btn-call-navbar">
+        <i class="fa-solid fa-phone"></i> {{ site_settings.phone if site_settings else '90251 00053' }}
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Flash Messages -->
+<div class="container mt-3">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'danger' else category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+<!-- Page Content -->
+{% block content %}{% endblock %}
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="navbar-brand-wrap mb-3">
+          <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="logo" style="height:56px;width:56px;">
+          <span>
+            <span class="brand-title d-block">DAVINCI<br>PHYSIOTHERAPY</span>
+            <span class="brand-subtitle">Healing. Movement. Life.</span>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="footer-heading">Get In Touch</div>
+        <p><i class="fa-solid fa-phone me-2 text-primary-brand"></i>{{ site_settings.phone if site_settings else '90251 00053' }}</p>
+        <p><i class="fa-solid fa-envelope me-2 text-primary-brand"></i>{{ site_settings.email if site_settings else 'davinciphysiotherapy@gmail.com' }}</p>
+      </div>
+      <div class="col-lg-4">
+        <div class="footer-heading">Our Location</div>
+        <p><i class="fa-solid fa-location-dot me-2 text-primary-brand"></i>{{ site_settings.address if site_settings else 'PA 9 Block, Police Quarters TNPHC, Melakottaiyur, Kandigai, Off Vandalur Kelambakkam Road, Chennai - 600127' }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom text-center">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <span>&copy; {{ current_year }} Davinci Physiotherapy. All Rights Reserved.</span>
+      <span>Designed with care for your recovery.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating Buttons -->
+<div class="floating-btns">
+  <a href="https://wa.me/{{ site_settings.whatsapp if site_settings else '919025100053' }}" target="_blank" class="floating-btn whatsapp" title="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  <a href="tel:{{ (site_settings.phone if site_settings else '9025100053') | replace(' ', '') }}" class="floating-btn call" title="Call Us">
+    <i class="fa-solid fa-phone"></i>
+  </a>
+</div>
+<button id="backToTop" class="back-to-top" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

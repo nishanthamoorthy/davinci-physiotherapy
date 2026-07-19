@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Book an Appointment | Davinci Physiotherapy{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Book Appointment</span>
+    <h1 class="mt-2">Book Your Home Physiotherapy Session</h1>
+    <nav class="breadcrumb-brand mt-2">
+      <a href="{{ url_for('main.index') }}">Home</a> / <span class="active">Book Appointment</span>
+    </nav>
+  </div>
+</div>
+
+<section class="py-5" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="form-card" data-aos="fade-up">
+          <h4 class="mb-4">Patient & Appointment Details</h4>
+          <form method="POST" action="{{ url_for('main.appointment') }}" class="needs-validation" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">{{ form.patient_name.label.text }}</label>
+                {{ form.patient_name(class="form-control", placeholder="Full name") }}
+                {% for error in form.patient_name.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ form.phone.label.text }}</label>
+                {{ form.phone(class="form-control", placeholder="Phone number") }}
+                {% for error in form.phone.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ form.email.label.text }}</label>
+                {{ form.email(class="form-control", placeholder="you@example.com") }}
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">{{ form.age.label.text }}</label>
+                {{ form.age(class="form-control", placeholder="Age") }}
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">{{ form.gender.label.text }}</label>
+                {{ form.gender(class="form-select") }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">{{ form.service_id.label.text }}</label>
+                {{ form.service_id(class="form-select") }}
+                {% for error in form.service_id.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">{{ form.appointment_date.label.text }}</label>
+                {{ form.appointment_date(class="form-control", type="date") }}
+                {% for error in form.appointment_date.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">{{ form.appointment_time.label.text }}</label>
+                {{ form.appointment_time(class="form-control", type="time") }}
+                {% for error in form.appointment_time.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-12">
+                <label class="form-label">{{ form.address.label.text }}</label>
+                {{ form.address(class="form-control", placeholder="Full home address for the visit") }}
+                {% for error in form.address.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+              </div>
+              <div class="col-12">
+                <label class="form-label">{{ form.message.label.text }}</label>
+                {{ form.message(class="form-control", rows="4", placeholder="Describe your condition or any special requirements...") }}
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-brand-solid w-100 justify-content-center">
+                  <i class="fa-regular fa-calendar-check"></i> Confirm Appointment Request
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
