@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Conditions We Treat | Davinci Physiotherapy{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Conditions</span>
+    <h1 class="mt-2">Conditions We Treat</h1>
+    <nav class="breadcrumb-brand mt-2">
+      <a href="{{ url_for('main.index') }}">Home</a> / <span class="active">Conditions</span>
+    </nav>
+  </div>
+</div>
+
+<section class="py-5" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container">
+    <div class="row g-4">
+      {% set conditions = [
+        ('fa-solid fa-bone', 'Post-Surgical Recovery', 'Rehabilitation following knee, hip, or shoulder replacement and other orthopedic surgeries.'),
+        ('fa-solid fa-brain', 'Stroke Rehabilitation', 'Regain strength, coordination, and independence after a stroke or brain injury.'),
+        ('fa-solid fa-person-walking-with-cane', "Parkinson's Disease", 'Balance training, gait correction, and mobility exercises tailored for Parkinson\'s patients.'),
+        ('fa-solid fa-lungs', 'Chronic Respiratory Conditions', 'Breathing exercises and chest physiotherapy for COPD, asthma, and post-COVID recovery.'),
+        ('fa-solid fa-child-reaching', 'Cerebral Palsy', 'Developmental therapy programs to improve motor skills in children.'),
+        ('fa-solid fa-spa', 'Chronic Back & Neck Pain', 'Targeted manual therapy and posture correction to relieve chronic pain.'),
+        ('fa-solid fa-person-cane', 'Arthritis & Joint Pain', 'Pain management and mobility-preserving exercise programs for arthritis.'),
+        ('fa-solid fa-hand-fist', 'Sports Injuries', 'Recovery plans for sprains, strains, ligament tears, and sports-related trauma.'),
+        ('fa-solid fa-heart-pulse', 'Cardiac Rehabilitation', 'Supervised, safe exercise regimens for patients recovering from cardiac events.'),
+      ] %}
+      {% for icon, title, desc in conditions %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 50 }}">
+        <div class="info-card text-start">
+          <div class="service-icon mb-3"><i class="{{ icon }}"></i></div>
+          <h6 class="fw-bold mb-2">{{ title }}</h6>
+          <p class="text-muted small mb-0">{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-cream text-center" style="padding-top:3.5rem;padding-bottom:3.5rem;">
+  <div class="container">
+    <p class="hero-subtext mb-3">Don't see your condition listed? We treat a wide range of musculoskeletal and neurological conditions.</p>
+    <a href="{{ url_for('main.contact') }}" class="btn-brand-solid">Ask Our Experts</a>
+  </div>
+</section>
+
+{% endblock %}

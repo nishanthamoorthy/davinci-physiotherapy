@@ -1,0 +1,78 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Dashboard | Admin{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3 col-6">
+    <div class="admin-stat-card">
+      <div class="value">{{ stats.total_appointments }}</div>
+      <div class="text-muted small">Total Appointments</div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="admin-stat-card">
+      <div class="value">{{ stats.pending_appointments }}</div>
+      <div class="text-muted small">Pending Appointments</div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="admin-stat-card">
+      <div class="value">{{ stats.total_services }}</div>
+      <div class="text-muted small">Active Services</div>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="admin-stat-card">
+      <div class="value">{{ stats.total_messages }}</div>
+      <div class="text-muted small">Contact Messages</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <h6 class="fw-bold mb-3">Recent Appointments</h6>
+    <div class="admin-table p-3">
+      {% if recent_appointments %}
+        <table class="table table-sm mb-0">
+          <thead><tr><th>Patient</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+          {% for a in recent_appointments %}
+            <tr>
+              <td>{{ a.patient_name }}</td>
+              <td>{{ a.appointment_date.strftime('%d %b %Y') }}</td>
+              <td><span class="badge badge-status-{{ a.status }}">{{ a.status|capitalize }}</span></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="text-muted small mb-0">No appointments yet.</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <h6 class="fw-bold mb-3">Recent Messages</h6>
+    <div class="admin-table p-3">
+      {% if recent_messages %}
+        <table class="table table-sm mb-0">
+          <thead><tr><th>Name</th><th>Subject</th><th>Date</th></tr></thead>
+          <tbody>
+          {% for m in recent_messages %}
+            <tr>
+              <td>{{ m.name }}</td>
+              <td>{{ m.subject or '-' }}</td>
+              <td>{{ m.created_at.strftime('%d %b %Y') }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="text-muted small mb-0">No messages yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

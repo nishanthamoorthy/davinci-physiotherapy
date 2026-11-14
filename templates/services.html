@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Our Services | Davinci Physiotherapy{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Our Services</span>
+    <h1 class="mt-2">Comprehensive Physiotherapy Care at Home</h1>
+    <nav class="breadcrumb-brand mt-2">
+      <a href="{{ url_for('main.index') }}">Home</a> / <span class="active">Services</span>
+    </nav>
+  </div>
+</div>
+
+<section class="py-5" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container">
+    <div class="row g-4">
+      {% for service in services %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 60 }}">
+        <div class="service-card text-start h-100">
+          <div class="service-icon"><i class="{{ service.icon }}"></i></div>
+          <h6>{{ service.title }}</h6>
+          <p>{{ service.description }}</p>
+          <a href="{{ url_for('main.appointment') }}" class="btn-brand-outline btn-sm mt-3">Book This Service</a>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-12 text-center text-muted py-5">Services will be listed here soon.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-cream" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container text-center">
+    <span class="section-label">Get Started</span>
+    <h2 class="section-title mt-2 mb-4">Not sure which service you need?</h2>
+    <p class="hero-subtext mx-auto mb-4" style="max-width:600px;">Speak with our team and we'll help match you with the right physiotherapist and treatment plan for your condition.</p>
+    <a href="tel:{{ (site_settings.phone if site_settings else '9025100053') | replace(' ', '') }}" class="btn-brand-solid"><i class="fa-solid fa-phone"></i> CALL US NOW</a>
+  </div>
+</section>
+
+{% endblock %}

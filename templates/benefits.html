@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Benefits of Home Physiotherapy | Davinci Physiotherapy{% endblock %}
+{% block content %}
+
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Benefits</span>
+    <h1 class="mt-2">Why Choose Home Physiotherapy?</h1>
+    <nav class="breadcrumb-brand mt-2">
+      <a href="{{ url_for('main.index') }}">Home</a> / <span class="active">Benefits</span>
+    </nav>
+  </div>
+</div>
+
+<section class="py-5" style="padding-top:4.5rem;padding-bottom:4.5rem;">
+  <div class="container">
+    <div class="row g-4">
+      {% set benefits = [
+        ('fa-solid fa-house', 'Comfort of Home', 'Recover in a familiar, stress-free environment without the anxiety of clinic visits.'),
+        ('fa-solid fa-clock', 'Saves Time', 'No travel, no waiting rooms — our therapist comes directly to you at a scheduled time.'),
+        ('fa-solid fa-user-doctor', 'One-on-One Attention', 'Undivided, personalized attention from your therapist for the full session duration.'),
+        ('fa-solid fa-shield-virus', 'Reduced Infection Risk', 'Avoid exposure to hospital-acquired infections, especially important for vulnerable patients.'),
+        ('fa-solid fa-house-chimney-user', 'Real-Life Environment Training', 'Therapy adapted to your actual home layout — stairs, furniture, and daily routines.'),
+        ('fa-solid fa-chart-line', 'Consistent Progress Tracking', 'Regular in-home assessments ensure your treatment plan evolves with your recovery.'),
+      ] %}
+      {% for icon, title, desc in benefits %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 60 }}">
+        <div class="info-card text-center h-100">
+          <div class="service-icon mx-auto mb-3"><i class="{{ icon }}"></i></div>
+          <h6 class="fw-bold mb-2">{{ title }}</h6>
+          <p class="text-muted small mb-0">{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="why-choose-section text-center">
+  <div class="container">
+    <span class="section-label">Experience the Difference</span>
+    <h2 class="text-white section-title mt-3 mb-4">Recovery that fits your life, not the other way around.</h2>
+    <a href="{{ url_for('main.appointment') }}" class="btn btn-light rounded-pill px-4 py-2 fw-semibold">Book Your First Session</a>
+  </div>
+</section>
+
+{% endblock %}

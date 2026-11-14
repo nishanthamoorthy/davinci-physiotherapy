@@ -1,0 +1,36 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Testimonials | Admin{% endblock %}
+{% block page_title %}Testimonials{% endblock %}
+{% block content %}
+
+<div class="mb-3">
+  <a href="{{ url_for('admin.add_testimonial') }}" class="btn-brand-solid"><i class="fa-solid fa-plus"></i> Add Testimonial</a>
+</div>
+
+<div class="admin-table p-3">
+  <div class="table-responsive">
+  <table class="table align-middle mb-0">
+    <thead><tr><th>Patient</th><th>Rating</th><th>Review</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for t in testimonials %}
+      <tr>
+        <td>{{ t.patient_name }}<div class="text-muted small">{{ t.designation or '' }}</div></td>
+        <td>{% for i in range(t.rating) %}<i class="fa-solid fa-star text-warning"></i>{% endfor %}</td>
+        <td class="small text-muted">{{ t.review[:70] }}{% if t.review|length > 70 %}...{% endif %}</td>
+        <td><span class="badge {{ 'bg-success' if t.status == 'active' else 'bg-secondary' }}">{{ t.status|capitalize }}</span></td>
+        <td>
+          <a href="{{ url_for('admin.edit_testimonial', t_id=t.id) }}" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-pen"></i></a>
+          <form method="POST" action="{{ url_for('admin.delete_testimonial', t_id=t.id) }}" class="d-inline" onsubmit="return confirm('Delete this testimonial?');">
+            <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="text-center text-muted py-4">No testimonials added yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+{% endblock %}

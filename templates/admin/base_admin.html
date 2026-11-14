@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Admin | Davinci Physiotherapy{% endblock %}</title>
+<link rel="icon" type="image/jpg" href="{{ url_for('static', filename='images/logo.jpg') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<aside class="admin-sidebar" id="adminSidebar">
+  <a href="{{ url_for('admin.dashboard') }}" class="brand">DAVINCI<br><span style="font-size:0.7rem;letter-spacing:2px;opacity:.7;">ADMIN PANEL</span></a>
+  <nav class="nav flex-column">
+    <a class="nav-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}" href="{{ url_for('admin.dashboard') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+    <a class="nav-link {% if request.endpoint == 'admin.appointments' %}active{% endif %}" href="{{ url_for('admin.appointments') }}"><i class="fa-regular fa-calendar-check"></i> Appointments</a>
+    <a class="nav-link {% if 'service' in request.endpoint %}active{% endif %}" href="{{ url_for('admin.services') }}"><i class="fa-solid fa-hand-holding-medical"></i> Services</a>
+    <a class="nav-link {% if 'testimonial' in request.endpoint %}active{% endif %}" href="{{ url_for('admin.testimonials') }}"><i class="fa-solid fa-star"></i> Testimonials</a>
+    <a class="nav-link {% if request.endpoint == 'admin.contacts' %}active{% endif %}" href="{{ url_for('admin.contacts') }}"><i class="fa-regular fa-envelope"></i> Contact Messages</a>
+    <a class="nav-link {% if request.endpoint == 'admin.settings' %}active{% endif %}" href="{{ url_for('admin.settings') }}"><i class="fa-solid fa-gear"></i> Settings</a>
+    <hr style="border-color: rgba(255,255,255,0.15);">
+    <a class="nav-link" href="{{ url_for('main.index') }}" target="_blank"><i class="fa-solid fa-globe"></i> View Site</a>
+    <a class="nav-link" href="{{ url_for('admin.logout') }}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+  </nav>
+</aside>
+
+<main class="admin-content">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button class="btn btn-sm btn-outline-dark d-lg-none" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+    <h4 class="mb-0">{% block page_title %}Dashboard{% endblock %}</h4>
+    <span class="text-muted small">Logged in as <strong>{{ session.get('admin_username', 'Admin') }}</strong></span>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'danger' else category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
